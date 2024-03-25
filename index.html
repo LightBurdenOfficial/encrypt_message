@@ -1,0 +1,100 @@
+<html>
+    <head>
+        <title>Mensagem Criptografada</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="title" content="Mensagem Criptografada" />
+        <!-- Bootstrap 5.3.2 -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+        <!-- ENCRIPTAÇÃO -->
+        <script src="https://cdn.jsdelivr.net/npm/crypto-js/crypto-js.min.js"></script>
+    </head>
+    <body class="bg-dark text-light">
+        <div class="container">
+            <div class="card mt-5 mb-5">
+                <div class="card-body">
+                    <div class="row mt-2 mb-2">
+                        <div class="col-md-12 text-center">
+                            <span class="h3 text-uppercase fw-bold">Encriptar Mensagem</span>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="encrypt_secretKey">Chave Secreta:</label>
+                            <input type="password" class="form-control" id="encrypt_secretKey">
+                            <label for="encryptMessage">Mensagem:</label>
+                            <textarea class="form-control" id="encryptMessage" rows="4"></textarea>
+                        </div>
+                        <div class="col-md-12 mt-2">
+                            <button class="btn btn-success btn-lg form-control" id="encryptBTN">ENCRIPTAR</button>
+                        </div>
+                    </div>
+                    <div class="row mt-2 mb-2">
+                        <div class="col-md-12 text-center">
+                            <span class="h3 text-uppercase fw-bold">Decriptar Mensagem</span>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="decrypt_secretKey">Chave Secreta:</label>
+                            <input type="password" class="form-control" id="decrypt_secretKey">
+                            <label for="decryptMessage">Mensagem criptografada:</label>
+                            <textarea class="form-control" id="decryptMessage" rows="4"></textarea>
+                        </div>
+                        <div class="col-md-12 mt-2">
+                            <button class="btn btn-danger btn-lg form-control" id="decryptBTN">DECRIPTAR</button>
+                        </div>
+                    </div>
+                    <div class="row mt-2 mb-2">
+                        <div class="col-md-12 text-center">
+                            <span class="h3 text-uppercase fw-bold">Resultado:</span>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="resultMessage">Mensagem:</label>
+                            <textarea class="form-control" id="resultMessage" rows="4"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <span class="float-start" style="font-size: 0.75rem;"><b>Desenvolvedor:</b> Francis Santiago</span>
+                    <span class="float-end" style="font-size: 0.75rem;"><b>Versão:</b>1.0.0</span>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $('#encryptBTN').click(() => {
+                let encrypt_secretKey = $('#encrypt_secretKey').val();
+                let encryptMessage = $('#encryptMessage').val();
+                let resultMessage = $('#resultMessage');
+
+                if(!encrypt_secretKey){
+                    alert('Chave secreta não inserida!');
+                } else if(!encryptMessage){
+                    alert('Mensagem não inserida!');
+                } else {
+                    var encrytedText = CryptoJS.AES.encrypt(encryptMessage, encrypt_secretKey);
+                    resultMessage.val(encrytedText);
+                }
+            });
+ 
+            $('#decryptBTN').click(() => {
+                let decrypt_secretKey = $('#decrypt_secretKey').val();
+                let decryptMessage = $('#decryptMessage').val();
+                let resultMessage = $('#resultMessage');
+               
+                if(!decrypt_secretKey){
+                    alert('Chave secreta não inserida!');
+                } else if(!decryptMessage){
+                    alert('Mensagem criptografada não inserida!');
+                } else {
+                    var decrytedText = CryptoJS.AES.decrypt(decryptMessage, decrypt_secretKey).toString(CryptoJS.enc.Utf8);
+
+                    if(!decrytedText){
+                        alert("Mensagem não decriptada!");
+                    } else {
+                        resultMessage.val(decrytedText);
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
